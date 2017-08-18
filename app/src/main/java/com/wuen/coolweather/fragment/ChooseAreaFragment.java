@@ -95,7 +95,7 @@ public class ChooseAreaFragment extends Fragment
                 }else if (currentLevel == LEVEL_CITY)
                 {
                     selectedCity = cityList.get(position);
-                    queryCounties();
+                    queryCounties();  
                 }
             }
         });

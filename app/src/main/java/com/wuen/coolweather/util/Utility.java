@@ -1,11 +1,12 @@
 package com.wuen.coolweather.util;
 
 import android.text.TextUtils;
-import android.util.Log;
 
+import com.google.gson.Gson;
 import com.wuen.coolweather.db.City;
 import com.wuen.coolweather.db.County;
 import com.wuen.coolweather.db.Province;
+import com.wuen.coolweather.gson.Weather;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,7 +62,6 @@ public class Utility
         {
             try
             {
-                Log.d(TAG, "handleProvinceResponse:city response : " + response.toString());
                 JSONArray allCities = new JSONArray(response);
                 for (int i = 0; i < allCities.length(); i++)
                 {
@@ -111,5 +111,21 @@ public class Utility
         }
 
         return false;
+    }
+
+    public static Weather handleWeatherResponse(String response)
+    {
+        try
+        {
+            JSONObject jsonObject = new JSONObject(response);
+            JSONArray jsonArray = jsonObject.getJSONArray("HeWeather");
+            String weatherContent = jsonArray.getJSONObject(0).toString();
+            return new Gson().fromJson(weatherContent, Weather.class);
+        } catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
